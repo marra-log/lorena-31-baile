@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Baile de Máscaras · Lorena</title>
+<meta name="description" content="Você é meu convidado especial. 13 de novembro, 22h. Dress code: all black esporte fino.">
+<meta property="og:title" content="Baile de Máscaras · Lorena 🎭">
+<meta property="og:description" content="Uma noite de mistério, elegância e celebração. Abra o convite.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0b0907">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Great+Vibes&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b0907; --bg2:#14100b; --card:#18130d; --gold:#d6ab55; --gold2:#f1d38a; --goldd:#8f6c2c;
+  --txt:#efe6d3; --mut:#b9ab8f;
+  --serif:'Cinzel','Trajan Pro',Georgia,serif; --body:'Cormorant Garamond',Georgia,serif; --script:'Great Vibes','Brush Script MT',cursive;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+  color-scheme:dark;
+}
+html{scroll-behavior:smooth;scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--txt);font-family:var(--body);font-size:20px;line-height:1.5;overflow-x:hidden;-webkit-tap-highlight-color:transparent}
+a{color:inherit}
+button{font:inherit;color:inherit;cursor:pointer}
+.gold{background:linear-gradient(100deg,#8f6c2c 0%,#d6ab55 22%,#fff1c4 38%,#d6ab55 54%,#8f6c2c 75%,#d6ab55 100%);background-size:260% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 8s linear infinite}
+@keyframes shine{from{background-position:130% 0}to{background-position:-130% 0}}
+#amb{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0;transition:opacity 2s}
+#amb.on{opacity:1}
+#prog{position:fixed;left:0;top:0;height:2px;width:100%;transform-origin:0 50%;transform:scaleX(0);background:linear-gradient(90deg,var(--goldd),var(--gold2));z-index:60}
+.mt{font:400 clamp(34px,10vw,50px)/1.1 var(--serif);letter-spacing:.14em;text-align:center;margin:0}
+.big{font-size:clamp(70px,22vw,104px)!important;margin-top:-6px!important;filter:drop-shadow(0 4px 24px rgba(214,171,85,.25))}
+.date3{display:flex;justify-content:center;align-items:center;gap:18px;font:600 15px var(--serif);letter-spacing:.3em;color:var(--gold2);margin-top:6px}
+.date3 i{width:1px;height:18px;background:var(--gold);display:block}
+.rvh{opacity:0;filter:blur(8px);letter-spacing:.35em;transition:opacity 1.2s ease,filter 1.2s ease,letter-spacing 1.4s cubic-bezier(.2,.7,.2,1)}
+.rvh.in{opacity:1;filter:none;letter-spacing:.04em}
+.mt.rvh.in{letter-spacing:.14em}
+.hero .pl{will-change:transform;transform:translate3d(0,var(--py,0px),0)}
+.hero img.kb{transform:scale(1.06);animation:kb 24s ease-in-out infinite alternate}
+@keyframes kb{to{transform:scale(1.16) translate(-1.5%,-1%)}}
+.hero{border-radius:6px}
+.btn{position:relative;overflow:hidden}
+.btn.solid::before{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);transform:skewX(-20deg);animation:sheen 4.5s ease-in-out infinite}
+@keyframes sheen{0%,55%{left:-60%}100%{left:130%}}
+.btn:active{transform:scale(.97)}
+.count strong.fl{animation:fl .5s ease}
+@keyframes fl{0%{transform:translateY(-8px);opacity:.2}100%{transform:none;opacity:1}}
+.card{transition:transform .4s,border-color .4s,box-shadow .4s}
+.card:active{transform:scale(.985);border-color:var(--gold)}
+.card .ic{animation:glow 3.4s ease-in-out infinite}
+@keyframes glow{50%{box-shadow:0 0 22px rgba(214,171,85,.55)}}
+.mask{display:inline-block;animation:floaty 3.6s ease-in-out infinite}
+@keyframes floaty{50%{transform:translateY(-8px) rotate(-4deg)}}
+.stagebar{position:absolute;left:0;right:0;bottom:0;height:3px;background:linear-gradient(90deg,transparent,var(--gold2),transparent);z-index:4;transform:scaleX(0);transform-origin:50% 50%;transition:transform 1.4s ease}
+#stage.done .stagebar{transform:scaleX(1)}
+#spwrap{display:none;flex:1 0 100%;margin-top:6px}
+#spwrap.on{display:block}
+#spembed{border-radius:12px;overflow:hidden;min-height:80px}
+.music{flex-wrap:wrap}
+.rv{transition-delay:var(--d,0s)}
+@keyframes none{}
+
+/* ---------- ABERTURA ---------- */
+#stage{position:relative;height:100svh;min-height:560px;background:#000;display:flex;justify-content:center;overflow:hidden}
+#stage .frame{position:relative;height:100%;aspect-ratio:9/16;max-width:100%}
+#stage video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#000}
+#tap{position:absolute;inset:0;background:transparent;border:0;z-index:3;width:100%}
+#tap .pulse{position:absolute;left:50%;bottom:12%;transform:translateX(-50%);width:72%;height:70px;border-radius:40px;border:1px solid rgba(214,171,85,.0);animation:pulse 2.2s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(214,171,85,.45)}70%{box-shadow:0 0 0 26px rgba(214,171,85,0)}100%{box-shadow:0 0 0 0 rgba(214,171,85,0)}}
+#skip{position:absolute;top:calc(14px + env(safe-area-inset-top,0px));right:14px;z-index:4;background:rgba(0,0,0,.45);border:1px solid rgba(214,171,85,.5);color:var(--gold2);font:600 12px var(--serif);letter-spacing:.15em;padding:8px 14px;border-radius:30px;display:none}
+#scrollhint{position:absolute;left:0;right:0;bottom:calc(22px + env(safe-area-inset-bottom,0px));z-index:4;text-align:center;font:600 12px var(--serif);letter-spacing:.3em;color:var(--gold2);opacity:0;pointer-events:none;transition:opacity .8s}
+#scrollhint.on{opacity:1;pointer-events:auto;cursor:pointer}
+#scrollhint i{display:block;font-style:normal;font-size:22px;animation:bob 1.6s infinite}
+@keyframes bob{50%{transform:translateY(6px)}}
+
+/* ---------- CONTEÚDO ---------- */
+#content{display:none;position:relative;z-index:1}
+#content.show{display:block}
+.wrap{max-width:560px;margin:0 auto;padding:0 22px}
+section{padding:56px 0;position:relative}
+.rv{opacity:0;transform:translateY(34px) scale(.985);transition:opacity 1s ease,transform 1s cubic-bezier(.2,.7,.2,1)}
+.rv.in{opacity:1;transform:none}
+.rv.rvh{transform:none}
+.eyebrow{font:400 13px var(--serif);letter-spacing:.42em;text-transform:uppercase;color:var(--gold);text-align:center;margin:0 0 10px}
+h2{font:400 34px/1.15 var(--serif);text-align:center;margin:0 0 6px;letter-spacing:.04em}
+.script{font-family:var(--script);font-size:54px;line-height:1.05;text-align:center;margin:0}
+.orn{display:flex;align-items:center;gap:12px;justify-content:center;color:var(--gold);margin:16px auto 26px;max-width:320px}
+.orn::before,.orn::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--gold))}
+.orn::after{transform:scaleX(-1)}
+.orn b{font-weight:400;font-size:16px}
+
+.hero{position:relative;margin:0 -22px;overflow:hidden}
+.hero img{display:block;width:100%;height:auto}
+.hero::after{content:"";position:absolute;inset:0;box-shadow:inset 0 0 60px 20px var(--bg)}
+.lead{text-align:center;color:var(--mut);font-style:italic;margin:26px 0 0}
+
+/* contagem */
+.count{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:8px}
+.count div{background:var(--card);border:1px solid rgba(214,171,85,.35);border-radius:14px;padding:14px 4px;text-align:center}
+.count strong{display:block;font:600 32px var(--serif)}
+.count span{font:400 11px var(--serif);letter-spacing:.2em;color:var(--mut);text-transform:uppercase}
+#cdmsg{text-align:center;color:var(--gold2);margin:16px 0 0;font-style:italic}
+
+/* cartões de informação */
+.cards{display:grid;gap:14px}
+.card{background:linear-gradient(160deg,#1b150e,#120e09);border:1px solid rgba(214,171,85,.35);border-radius:18px;padding:20px 22px;display:flex;gap:16px;align-items:center}
+.card .ic{flex:0 0 46px;height:46px;border-radius:50%;border:1px solid var(--gold);display:grid;place-items:center;color:var(--gold2);font-size:21px}
+.card small{display:block;font:400 11px var(--serif);letter-spacing:.3em;color:var(--gold);text-transform:uppercase}
+.card p{margin:2px 0 0;font-size:21px;line-height:1.3}
+.btns{display:flex;flex-wrap:wrap;gap:12px;margin-top:20px}
+.btn{flex:1 1 200px;display:inline-flex;justify-content:center;align-items:center;gap:8px;text-decoration:none;text-align:center;font:600 13px var(--serif);letter-spacing:.16em;text-transform:uppercase;padding:16px 18px;border-radius:40px;border:1px solid var(--gold);background:transparent;color:var(--gold2);transition:.25s}
+.btn:hover,.btn:active{background:var(--gold);color:#1a1208}
+.btn.solid{background:linear-gradient(180deg,var(--gold2),var(--gold));color:#1a1208;border-color:transparent}
+.btn.solid:active{filter:brightness(.9)}
+
+/* dress code */
+.flip{perspective:900px;height:230px;margin-top:6px;cursor:pointer}
+.flip .in2{position:relative;width:100%;height:100%;transition:transform .8s;transform-style:preserve-3d}
+.flip.on .in2{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:18px;border:1px solid rgba(214,171,85,.5);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:18px;background:radial-gradient(circle at 50% 0,#241b10,#0e0b07)}
+.face.back{transform:rotateY(180deg)}
+.face .big{font:600 26px var(--serif);letter-spacing:.14em}
+.face .tip{margin-top:14px;font:400 11px var(--serif);letter-spacing:.3em;color:var(--mut)}
+.mask{font-size:46px;margin-bottom:6px}
+
+.quote{padding:70px 0;background:radial-gradient(ellipse at 50% 50%,#1c150c,transparent 70%)}
+.quote p{text-align:center;margin:0}
+.quote .q1{font-size:24px;font-style:italic;color:var(--txt)}
+.quote .q2{font-family:var(--script);font-size:46px;line-height:1.2;margin-top:18px}
+
+/* música */
+.music{display:flex;align-items:center;gap:16px;background:var(--card);border:1px solid rgba(214,171,85,.35);border-radius:18px;padding:16px}
+.music .disc{flex:0 0 74px;height:74px;border-radius:50%;background:conic-gradient(from 0deg,#2b2112,#8f6c2c,#2b2112,#d6ab55,#2b2112);position:relative;animation:spin 6s linear infinite;animation-play-state:paused}
+.music.playing .disc{animation-play-state:running}
+.music .disc::after{content:"";position:absolute;inset:28px;border-radius:50%;background:var(--bg)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.music h3{margin:0;font:600 16px var(--serif);letter-spacing:.1em}
+.music p{margin:2px 0 8px;color:var(--mut);font-size:17px}
+.music .btn{padding:10px 16px;font-size:11px;flex:0 0 auto}
+
+/* presentes */
+.gifts p.note{text-align:center;color:var(--mut)}
+.gl{list-style:none;margin:20px 0 0;padding:0;display:grid;gap:10px}
+.gl button{width:100%;text-align:left;display:flex;align-items:center;gap:14px;background:var(--card);border:1px solid rgba(214,171,85,.25);border-radius:14px;padding:14px 16px;transition:.25s}
+.gl button .ck{flex:0 0 26px;height:26px;border-radius:50%;border:1px solid var(--gold);display:grid;place-items:center;color:transparent;font-size:15px;transition:.25s}
+.gl button .t{flex:1;line-height:1.25}
+.gl button .t em{display:block;font-size:16px;color:var(--mut)}
+.gl button[aria-pressed="true"]{border-color:var(--gold);background:#241b10}
+.gl button[aria-pressed="true"] .ck{background:var(--gold);color:#1a1208}
+.gcount{text-align:center;margin:14px 0 0;color:var(--gold2);font-style:italic;min-height:1.5em}
+.pix{margin-top:26px;border:1px dashed var(--gold);border-radius:18px;padding:20px;text-align:center;background:rgba(214,171,85,.05)}
+.pix small{font:400 11px var(--serif);letter-spacing:.3em;color:var(--gold)}
+.pix .key{font:600 26px var(--serif);letter-spacing:.08em;margin:6px 0 14px;user-select:all;-webkit-user-select:all}
+.sign{text-align:center;margin-top:30px}
+.sign .script{font-size:44px}
+
+/* rsvp */
+form{display:grid;gap:18px}
+label{display:block;font:400 12px var(--serif);letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+input[type=text],input[type=tel]{width:100%;background:transparent;border:0;border-bottom:1px solid var(--gold);color:var(--txt);font:400 24px var(--body);padding:8px 2px;outline:0;border-radius:0}
+input:focus{border-bottom-color:var(--gold2);box-shadow:0 1px 0 var(--gold2)}
+.err{color:#e59b8b;font-size:16px;min-height:1.2em;margin-top:4px}
+.seg{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg label{margin:0;text-align:center;padding:14px 8px;border:1px solid rgba(214,171,85,.4);border-radius:40px;letter-spacing:.14em;color:var(--mut);cursor:pointer;transition:.25s}
+.seg input:checked+label{background:linear-gradient(180deg,var(--gold2),var(--gold));color:#1a1208;border-color:transparent}
+#ok{display:none;text-align:center}
+#ok.show{display:block}
+#ok .tick{width:78px;height:78px;margin:0 auto 14px;border-radius:50%;border:1px solid var(--gold);display:grid;place-items:center;font-size:36px;color:var(--gold2);animation:pop .6s}
+@keyframes pop{0%{transform:scale(.3);opacity:0}70%{transform:scale(1.1)}100%{transform:scale(1);opacity:1}}
+footer{padding:40px 0 70px;text-align:center;color:var(--mut)}
+footer .script{font-size:40px}
+
+/* barra de navegação flutuante */
+#dock{position:fixed;left:50%;transform:translate(-50%,120px);bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:20;display:flex;gap:4px;background:rgba(15,12,8,.88);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(214,171,85,.5);border-radius:40px;padding:6px;transition:transform .5s}
+#dock.show{transform:translate(-50%,0)}
+#dock a{text-decoration:none;font:600 10px var(--serif);letter-spacing:.14em;text-transform:uppercase;padding:10px 12px;border-radius:30px;color:var(--gold2)}
+#dock a.act{background:var(--gold);color:#1a1208}
+#fm{position:fixed;right:14px;top:calc(14px + env(safe-area-inset-top,0px));z-index:21;width:44px;height:44px;border-radius:50%;border:1px solid var(--gold);background:rgba(15,12,8,.8);color:var(--gold2);display:none;place-items:center;font-size:19px}
+#fm.show{display:grid}
+
+#toast{position:fixed;left:50%;bottom:calc(86px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);background:var(--gold);color:#1a1208;font:600 12px var(--serif);letter-spacing:.12em;padding:12px 20px;border-radius:30px;opacity:0;pointer-events:none;transition:.35s;z-index:40;max-width:90%;text-align:center}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+canvas#fx{position:fixed;inset:0;pointer-events:none;z-index:50}
+@media (prefers-reduced-motion:reduce){.rv,.rvh{transition:none;opacity:1;transform:none;filter:none}.pulse,.disc,#scrollhint i,.gold,.kb,.mask,.card .ic,.btn::before{animation:none!important}}
+</style>
+</head>
+<body>
+
+<!-- ABERTURA DO ENVELOPE -->
+<canvas id="amb"></canvas><div id="prog"></div>
+<div id="stage">
+  <div class="frame">
+    <video id="vid" src="asset0s.mp4" poster="asset1s.jpg" playsinline webkit-playsinline preload="auto" muted></video>
+    <button id="tap" aria-label="Clique para abrir o convite"><span class="pulse"></span></button>
+    <button id="skip" type="button">PULAR</button>
+    <div class="stagebar"></div>
+    <div id="scrollhint" role="button" tabindex="0">ROLE PARA CONTINUAR<i>⌄</i></div>
+  </div>
+</div>
+
+<button id="fm" aria-label="Ligar ou desligar o som">♪</button>
+
+<div id="content">
+  <!-- SAVE THE DATE -->
+  <section id="topo">
+    <div class="wrap">
+      <p class="eyebrow rv" style="margin-top:10px">Save the date</p>
+      <h1 class="mt gold rvh">BAILE DE</h1>
+      <p class="script gold big rv" style="--d:.2s">Máscaras</p>
+      <div class="orn rv"><b>✦</b></div>
+      <div class="date3 rv"><span>13 NOV</span><i></i><span>22H</span></div>
+      <p class="lead rv" style="margin:22px 0 28px">Uma noite especial está chegando…</p>
+      <div class="hero rv"><div class="pl"><img class="kb" src="asset2s.jpg" alt="Save the date: Baile de Máscaras, 13 de novembro, 22 horas"></div></div>
+      <p class="lead rv">Uma noite de mistério, elegância e celebração.</p>
+      <div class="orn rv"><b>✦</b></div>
+      <p class="eyebrow rv">Faltam</p>
+      <div class="count rv" id="count" aria-live="off">
+        <div><strong id="cd">--</strong><span>dias</span></div>
+        <div><strong id="ch">--</strong><span>horas</span></div>
+        <div><strong id="cm">--</strong><span>min</span></div>
+        <div><strong id="cs">--</strong><span>seg</span></div>
+      </div>
+      <p id="cdmsg" class="rv"></p>
+    </div>
+  </section>
+
+  <!-- DETALHES -->
+  <section id="detalhes">
+    <div class="wrap">
+      <p class="eyebrow rv">Detalhes</p>
+      <h2 class="gold rvh">Anote na agenda</h2>
+      <div class="orn rv"><b>✦</b></div>
+      <div class="cards">
+        <div class="card rv"><div class="ic">📅</div><div><small>Data</small><p>13 de novembro</p></div></div>
+        <div class="card rv"><div class="ic">🕙</div><div><small>Horário</small><p>22:00</p></div></div>
+        <div class="card rv"><div class="ic">📍</div><div><small>Local</small><p>Espaço Patricio's<br>Rua Bom Repouso, 220 · Cardoso</p></div></div>
+      </div>
+      <div class="btns rv">
+        <a class="btn solid" id="mapa" href="https://maps.app.goo.gl/EezxqXeQnrpfvbJYA?g_st=iw" target="_blank" rel="noopener">📍 Ver no mapa</a>
+        <a class="btn" id="agenda" href="#" target="_blank" rel="noopener">🗓 Salvar na agenda</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- DRESS CODE -->
+  <section id="dress">
+    <div class="wrap">
+      <p class="eyebrow rv">Dress code</p>
+      <h2 class="gold rvh">Toque para revelar</h2>
+      <div class="orn rv"><b>✦</b></div>
+      <div class="flip rv" id="flip" role="button" tabindex="0" aria-label="Revelar dress code">
+        <div class="in2">
+          <div class="face"><div class="mask">🎭</div><div class="big gold">DRESS CODE</div><div class="tip">TOQUE PARA VIRAR</div></div>
+          <div class="face back"><div class="big gold">ALL BLACK</div><div style="font:400 15px var(--serif);letter-spacing:.3em;margin:8px 0 14px">ESPORTE FINO</div><div style="font-size:20px;max-width:300px">Indispensável o uso de <b style="color:var(--gold2)">preto</b> e de <b style="color:var(--gold2)">máscara</b>.</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FRASE + MÚSICA -->
+  <section class="quote">
+    <div class="wrap">
+      <p class="q1 rv">Por trás de cada máscara, uma história.</p>
+      <p class="q2 gold rv">E hoje, a história é nossa. 🖤✨</p>
+      <div class="music rv" id="music" style="margin-top:44px">
+        <div class="disc"></div>
+        <div style="flex:1">
+          <h3>Dancin' Days</h3>
+          <p>Frenéticas · a trilha da noite</p>
+          <button class="btn" id="mbtn" type="button">▶ Ouvir</button>
+        </div>
+        <div id="spwrap"><div id="spembed"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRESENTES -->
+  <section id="presentes" class="gifts">
+    <div class="wrap">
+      <p class="eyebrow rv">Lista de presentes</p>
+      <h2 class="gold rvh">Sua presença é o meu maior presente</h2>
+      <div class="orn rv"><b>🥂</b></div>
+      <p class="note rv">Mas, caso queira me presentear, preparei algumas sugestões com muito carinho, pensando em coisas que eu amo. Toque para marcar o que você pretende dar.</p>
+      <ul class="gl rv" id="gl"></ul>
+      <p class="gcount" id="gcount"></p>
+
+      <div class="pix rv">
+        <small>OU, SE PREFERIR…</small>
+        <p style="margin:8px 0 4px;font-size:18px;color:var(--mut)">Se for mais prático, pode depositar o valor que investiria no presente. Será recebido com o mesmo carinho! ❤️</p>
+        <div class="key" id="pixkey">31999218838</div>
+        <button class="btn solid" id="pixbtn" type="button" style="width:100%">Copiar chave Pix</button>
+      </div>
+
+      <div class="sign rv">
+        <p style="margin:0;color:var(--mut)">No fim das contas, o que realmente importa é ter você comigo, celebrando a vida, brindando e fazendo parte desse momento tão especial.</p>
+        <p class="script gold" style="margin-top:14px">Com carinho,<br>Lorena Rodrigues da Cunha 🖤✨</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONFIRMAÇÃO -->
+  <section id="confirmar">
+    <div class="wrap">
+      <p class="eyebrow rv">RSVP</p>
+      <h2 class="gold rvh">Confirme sua presença</h2>
+      <div class="orn rv"><b>✦</b></div>
+      <form id="form" class="rv" novalidate>
+        <div>
+          <label for="nome">Nome</label>
+          <input id="nome" type="text" autocomplete="name" placeholder="Seu nome completo">
+          <div class="err" id="enome"></div>
+        </div>
+        <div>
+          <label for="tel">Telefone</label>
+          <input id="tel" type="tel" inputmode="tel" autocomplete="tel" placeholder="(31) 99999-9999" maxlength="15">
+          <div class="err" id="etel"></div>
+        </div>
+        <div class="seg">
+          <input type="radio" name="rs" id="rs1" value="sim" checked><label for="rs1">Vou com certeza</label>
+          <input type="radio" name="rs" id="rs2" value="nao"><label for="rs2">Não poderei ir</label>
+        </div>
+        <button class="btn solid" type="submit" style="width:100%">Confirmar</button>
+      </form>
+      <div id="ok">
+        <div class="tick">✓</div>
+        <h2 class="gold" id="okt">Presença confirmada!</h2>
+        <p id="okp" style="color:var(--mut)"></p>
+        <div class="btns"><a class="btn solid" id="wa" href="#" target="_blank" rel="noopener">💬 Avisar a Lorena no WhatsApp</a></div>
+        <p style="margin-top:18px"><button class="btn" id="redo" type="button" style="flex:none">Editar resposta</button></p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <div class="orn"><b>✦</b></div>
+      <p class="script gold" style="margin:0">Lorena · 31 anos</p>
+      <p style="margin:10px 0 0;font-size:16px;letter-spacing:.2em;font-family:var(--serif)">BAILE DE MÁSCARAS · 13.11 · 22H</p>
+    </div>
+  </footer>
+</div>
+
+<nav id="dock" aria-label="Atalhos">
+  <a href="#detalhes">Local</a><a href="#dress">Dress</a><a href="#presentes">Presentes</a><a href="#confirmar">Confirmar</a>
+</nav>
+<div id="toast" role="status"></div>
+<canvas id="fx"></canvas>
+
+<script>
+/* ================== CONFIGURAÇÃO (edite aqui) ================== */
+var CONFIG = {
+  // WhatsApp que recebe a confirmação (DDI+DDD+número, só dígitos). Vazio = o convidado escolhe o contato.
+  WHATSAPP_ANFITRIA: "",
+  // Chave Pix (copiada pelo botão)
+  PIX: "31999218838",
+  // MELHOR OPÇÃO: coloque na mesma pasta do index.html um arquivo "musica.mp3" já cortado
+  // no trecho "entra nessa festa..." (toca ao abrir o envelope, com fade e repetição).
+  // Se o arquivo não existir, a página usa automaticamente o player do Spotify.
+  AUDIO_SRC: "musica.mp3",
+  // Segundo do mp3 em que a música deve começar (0 se já estiver cortado)
+  AUDIO_INICIO: 0,
+  // Spotify (fallback): id da faixa e segundo do trecho "entra nessa festa" (só funciona para quem está logado no Spotify)
+  SPOTIFY_ID: "3JYSTqNZesQYJGLo7oMc6q",
+  SPOTIFY_INICIO: 0,
+  SPOTIFY: "https://open.spotify.com/track/3JYSTqNZesQYJGLo7oMc6q?si=3cVe2KdAS6iYW_iXMcL_GA&utm_source=whatsapp",
+  EVENTO: new Date("2026-11-13T22:00:00-03:00")
+};
+var GIFTS = [
+  ["💍","Semi joias","preferência por prata · anel nº 16"],
+  ["✨","Berloques para pulseira Pandora",""],
+  ["🌸","Perfumes doces e body splash","We Pink"],
+  ["👖","Calça jeans","nº 36/38"],
+  ["👜","Bolsas",""],
+  ["💇‍♀️","Produtos para cabelo","Eudora"],
+  ["💄","Maquiagem",""],
+  ["👚","Blusinhas","P/M"],
+  ["👠","Sandália de salto fino","nº 36"],
+  ["🩴","Rasteirinha","nº 36"],
+  ["👙","Biquíni","tamanho M"]
+];
+/* =============================================================== */
+var $=function(s){return document.querySelector(s)};
+var store={get:function(k){try{return localStorage.getItem(k)}catch(e){return null}},set:function(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+function toast(t){var el=$('#toast');el.textContent=t;el.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(function(){el.classList.remove('on')},2400)}
+
+/* ---------- abertura ---------- */
+var vid=$('#vid'),opened=false,audio=null,muted=false;
+function reveal(){
+  $('#content').classList.add('show');$('#dock').classList.add('show');
+  $('#skip').style.display='none';$('#scrollhint').classList.add('on');
+  observe();
+}
+function openInvite(){
+  if(opened)return;opened=true;
+  $('#tap').style.display='none';$('#skip').style.display='block';
+  vid.muted=true;var p=vid.play();if(p&&p.catch)p.catch(function(){vid.currentTime=vid.duration||4.7;reveal()});
+  startAudio();
+  setTimeout(reveal,1500); /* conteúdo já é montado enquanto o vídeo termina */
+}
+vid.addEventListener('ended',function(){vid.pause();reveal();$('#stage').classList.add('done');setTimeout(function(){$('#scrollhint').classList.add('on')},300);
+  setTimeout(function(){if(scrollY<innerHeight*.3&&!userScrolled)$('#topo').scrollIntoView({behavior:'smooth'})},2600)});
+var userScrolled=false;addEventListener('wheel',function(){userScrolled=true},{passive:true});addEventListener('touchmove',function(){userScrolled=true},{passive:true});
+$('#tap').addEventListener('click',openInvite);
+$('#skip').addEventListener('click',function(){try{vid.currentTime=Math.max(0,(vid.duration||4.8)-.05)}catch(e){}vid.pause();reveal();$('#topo').scrollIntoView({behavior:'smooth'})});
+$('#scrollhint').addEventListener('click',function(){$('#topo').scrollIntoView({behavior:'smooth'})});
+$('#scrollhint').addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' ')$('#topo').scrollIntoView({behavior:'smooth'})});
+
+/* ---------- música ---------- */
+var mode='none',sp=null,spReady=false,spFirst=true,playing=false;
+function setPlaying(v){playing=v;$('#music').classList.toggle('playing',v);$('#mbtn').textContent=v?'❚❚ Pausar':'▶ Ouvir'}
+function initSpotify(){
+  if(mode==='spotify')return;mode='spotify';
+  $('#spwrap').classList.add('on');
+  window.onSpotifyIframeApiReady=function(api){
+    api.createController($('#spembed'),{uri:'spotify:track:'+CONFIG.SPOTIFY_ID,width:'100%',height:80},function(c){
+      sp=c;
+      c.addListener('ready',function(){spReady=true});
+      c.addListener('playback_update',function(e){
+        var d=e.data||{};
+        if(!d.isPaused&&!d.isBuffering&&spFirst){spFirst=false;if(CONFIG.SPOTIFY_INICIO>0)c.seek(CONFIG.SPOTIFY_INICIO)}
+        setPlaying(!d.isPaused);
+      });
+    });
+  };
+  var s=document.createElement('script');s.src='https://open.spotify.com/embed/iframe-api/v1';s.async=true;
+  s.onerror=function(){mode='link'};document.body.appendChild(s);
+}
+function initAudio(){
+  if(!CONFIG.AUDIO_SRC){initSpotify();return}
+  audio=new Audio();audio.loop=true;audio.preload='auto';
+  audio.addEventListener('error',function(){audio=null;initSpotify()});
+  audio.addEventListener('loadedmetadata',function(){mode='audio';try{audio.currentTime=CONFIG.AUDIO_INICIO||0}catch(e){}});
+  audio.addEventListener('ended',function(){audio.currentTime=CONFIG.AUDIO_INICIO||0;audio.play()});
+  audio.src=CONFIG.AUDIO_SRC;audio.load();
+}
+function startAudio(){
+  if(mode==='audio'&&audio){
+    audio.volume=0;var p=audio.play();
+    if(p&&p.then)p.then(function(){fade(audio,.85);$('#fm').classList.add('show');setPlaying(true)}).catch(function(){});
+  }
+}
+function fade(a,to){var s=setInterval(function(){a.volume=Math.min(to,a.volume+.05);if(a.volume>=to)clearInterval(s)},120)}
+$('#mbtn').addEventListener('click',function(){
+  if(mode==='audio'&&audio){
+    if(audio.paused){audio.volume=.85;audio.play();setPlaying(true)}else{audio.pause();setPlaying(false)}
+  }else if(mode==='spotify'&&sp&&spReady){sp.togglePlay()}
+  else{window.open(CONFIG.SPOTIFY||('https://open.spotify.com/track/'+CONFIG.SPOTIFY_ID),'_blank','noopener')}
+});
+$('#fm').addEventListener('click',function(){if(!audio)return;muted=!muted;audio.muted=muted;this.textContent=muted?'🔇':'♪'});
+initAudio();
+
+/* ---------- reveal on scroll + dock ativo ---------- */
+var obsDone=false;
+function observe(){
+  if(obsDone)return;obsDone=true;
+  document.querySelectorAll('#content .wrap').forEach(function(w){
+    var k=0;w.querySelectorAll(':scope > .rv, .cards > .rv, .count > div').forEach(function(el){
+      if(!el.style.getPropertyValue('--d')){el.style.setProperty('--d',(k%5*0.12)+'s')}k++;
+    });
+  });
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12});
+  document.querySelectorAll('.rv,.rvh').forEach(function(el){io.observe(el)});
+  var links=document.querySelectorAll('#dock a');
+  var so=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){links.forEach(function(a){a.classList.toggle('act',a.getAttribute('href')==='#'+e.target.id)})}})},{rootMargin:'-45% 0px -50% 0px'});
+  ['detalhes','dress','presentes','confirmar'].forEach(function(id){so.observe(document.getElementById(id))});
+  startAmbient();
+}
+
+/* ---------- contagem regressiva ---------- */
+function setD(id,v){var e=$('#'+id);if(e.textContent!==v){e.textContent=v;e.classList.remove('fl');void e.offsetWidth;e.classList.add('fl')}}
+function tick(){
+  var d=CONFIG.EVENTO-new Date();
+  if(d<=0){['cd','ch','cm','cs'].forEach(function(i){$('#'+i).textContent='00'});$('#cdmsg').textContent='A noite chegou. Aproveite cada instante! 🖤';return}
+  var s=Math.floor(d/1000);
+  var dd=Math.floor(s/86400),hh=Math.floor(s%86400/3600),mm=Math.floor(s%3600/60),ss=s%60;
+  var z=function(n){return String(n).padStart(2,'0')};
+  setD('cd',z(dd));setD('ch',z(hh));setD('cm',z(mm));setD('cs',z(ss));
+  $('#cdmsg').textContent=dd===0?'É hoje! Prepare a máscara. 🎭':'para a noite de mistério e elegância.';
+}
+tick();setInterval(tick,1000);
+
+/* ---------- salvar na agenda (Google Calendar) ---------- */
+$('#agenda').href='https://calendar.google.com/calendar/render?action=TEMPLATE'
+ +'&text='+encodeURIComponent('Baile de Máscaras · Lorena 🎭')
+ +'&dates=20261113T220000/20261114T040000&ctz=America/Sao_Paulo'
+ +'&location='+encodeURIComponent("Espaço Patricio's, Rua Bom Repouso, 220, Cardoso")
+ +'&details='+encodeURIComponent('Dress code: all black esporte fino. Indispensável o uso de preto e de máscara.');
+
+/* ---------- dress code ---------- */
+var flip=$('#flip');
+function tg(){flip.classList.toggle('on')}
+flip.addEventListener('click',tg);flip.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();tg()}});
+
+/* ---------- presentes ---------- */
+var chosen=[];try{chosen=JSON.parse(store.get('gifts')||'[]')}catch(e){}
+var gl=$('#gl');
+GIFTS.forEach(function(g,i){
+  var li=document.createElement('li'),b=document.createElement('button');
+  b.type='button';b.setAttribute('aria-pressed',chosen.indexOf(i)>-1?'true':'false');
+  b.innerHTML='<span class="ck">✓</span><span class="t">'+g[0]+' '+g[1]+(g[2]?'<em>'+g[2]+'</em>':'')+'</span>';
+  b.addEventListener('click',function(){
+    var on=b.getAttribute('aria-pressed')!=='true';b.setAttribute('aria-pressed',on);
+    var k=chosen.indexOf(i);if(on&&k<0)chosen.push(i);if(!on&&k>-1)chosen.splice(k,1);
+    store.set('gifts',JSON.stringify(chosen));upd();
+    if(on)burst(b.getBoundingClientRect().left+30,b.getBoundingClientRect().top+20,14);
+  });
+  li.appendChild(b);gl.appendChild(li);
+});
+function giftTxt(){return chosen.slice().sort(function(a,b){return a-b}).map(function(i){return GIFTS[i][1]+(GIFTS[i][2]?' ('+GIFTS[i][2]+')':'')}).join(', ')}
+function upd(){$('#gcount').textContent=chosen.length?('Você marcou '+chosen.length+(chosen.length>1?' sugestões':' sugestão')+'. Elas vão junto na sua confirmação 🎁'):''}
+upd();
+
+/* ---------- pix ---------- */
+$('#pixbtn').addEventListener('click',function(){
+  var done=function(){toast('Chave Pix copiada! ✨')};
+  var fb=function(){var r=document.createRange();r.selectNodeContents($('#pixkey'));var s=getSelection();s.removeAllRanges();s.addRange(r);try{document.execCommand('copy');done()}catch(e){toast('Selecione e copie a chave acima')}};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(CONFIG.PIX).then(done,fb)}else fb();
+});
+
+/* ---------- RSVP ---------- */
+var tel=$('#tel');
+tel.addEventListener('input',function(){
+  var v=tel.value.replace(/\D/g,'').slice(0,11),o=v;
+  if(v.length>2)o='('+v.slice(0,2)+') '+v.slice(2);
+  if(v.length>7)o='('+v.slice(0,2)+') '+v.slice(2,7)+'-'+v.slice(7);
+  tel.value=o;
+});
+function showOk(d){
+  $('#form').style.display='none';$('#ok').classList.add('show');
+  var sim=d.rs==='sim';
+  $('#okt').textContent=sim?'Presença confirmada!':'Sentiremos sua falta';
+  $('#okp').textContent=sim?(d.nome.split(' ')[0]+', te esperamos dia 13/11, às 22h, de preto e de máscara. 🖤'):(d.nome.split(' ')[0]+', obrigada por avisar! 🖤');
+  var msg='Olá, Lorena! Aqui é '+d.nome+' ('+d.tel+'). '+(sim?'Confirmo minha presença no Baile de Máscaras dia 13/11 às 22h 🎭🖤':'Infelizmente não poderei ir ao Baile de Máscaras, mas desejo uma noite incrível! 🖤');
+  var g=giftTxt();if(sim&&g)msg+=' Pretendo te presentear com: '+g+'.';
+  $('#wa').href='https://wa.me/'+(CONFIG.WHATSAPP_ANFITRIA||'')+'?text='+encodeURIComponent(msg);
+  $('#wa').style.display='';
+}
+$('#form').addEventListener('submit',function(e){
+  e.preventDefault();
+  var nome=$('#nome').value.trim(),t=tel.value.trim(),ok=true;
+  $('#enome').textContent='';$('#etel').textContent='';
+  if(nome.length<3||nome.indexOf(' ')<0&&nome.length<3){$('#enome').textContent='Digite seu nome.';ok=false}
+  if(t.replace(/\D/g,'').length<10){$('#etel').textContent='Digite um telefone válido com DDD.';ok=false}
+  if(!ok){toast('Confira os campos');return}
+  var d={nome:nome,tel:t,rs:document.querySelector('input[name=rs]:checked').value};
+  store.set('rsvp',JSON.stringify(d));showOk(d);
+  if(d.rs==='sim')burst(innerWidth/2,innerHeight/2,90);
+  $('#ok').scrollIntoView({behavior:'smooth',block:'center'});
+});
+$('#redo').addEventListener('click',function(){$('#ok').classList.remove('show');$('#form').style.display='grid'});
+try{var sv=JSON.parse(store.get('rsvp')||'null');if(sv){$('#nome').value=sv.nome;tel.value=sv.tel;document.getElementById(sv.rs==='sim'?'rs1':'rs2').checked=true;}}catch(e){}
+
+/* ---------- progresso, parallax ---------- */
+var hero=document.querySelector('.hero'),pl=document.querySelector('.hero .pl'),tk=false;
+function onScroll(){
+  if(tk)return;tk=true;requestAnimationFrame(function(){
+    var h=document.documentElement.scrollHeight-innerHeight;
+    $('#prog').style.transform='scaleX('+(h>0?Math.min(1,scrollY/h):0)+')';
+    if(hero&&pl){var r=hero.getBoundingClientRect();var c=r.top+r.height/2-innerHeight/2;pl.style.setProperty('--py',(c*-.08).toFixed(1)+'px')}
+    tk=false});
+}
+addEventListener('scroll',onScroll,{passive:true});onScroll();
+
+/* ---------- poeira dourada ambiente ---------- */
+var amb=$('#amb'),ac=amb.getContext('2d'),D=[],ambOn=false,reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+function arz(){var r=Math.min(devicePixelRatio||1,2);amb.width=innerWidth*r;amb.height=innerHeight*r;ac.setTransform(r,0,0,r,0,0)}arz();addEventListener('resize',arz);
+function startAmbient(){
+  if(ambOn||reduce)return;ambOn=true;amb.classList.add('on');
+  var n=innerWidth<600?34:60;
+  for(var i=0;i<n;i++)D.push({x:Math.random()*innerWidth,y:Math.random()*innerHeight,r:.6+Math.random()*2.2,v:.15+Math.random()*.45,ph:Math.random()*6.28,dx:(Math.random()-.5)*.25});
+  (function f(){
+    ac.clearRect(0,0,innerWidth,innerHeight);
+    D.forEach(function(p){
+      p.y-=p.v;p.x+=p.dx+Math.sin(p.ph+=.012)*.25;
+      if(p.y<-6){p.y=innerHeight+6;p.x=Math.random()*innerWidth}
+      var a=.25+.55*Math.abs(Math.sin(p.ph*1.3));
+      var g=ac.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*4);
+      g.addColorStop(0,'rgba(241,211,138,'+a+')');g.addColorStop(1,'rgba(214,171,85,0)');
+      ac.fillStyle=g;ac.beginPath();ac.arc(p.x,p.y,p.r*4,0,6.28);ac.fill();
+    });
+    requestAnimationFrame(f);
+  })();
+}
+
+/* ---------- brilho dourado ---------- */
+var cv=$('#fx'),cx=cv.getContext('2d'),P=[];
+function rs(){cv.width=innerWidth;cv.height=innerHeight}rs();addEventListener('resize',rs);
+function burst(x,y,n){
+  for(var i=0;i<n;i++){var a=Math.random()*6.28,v=2+Math.random()*5;
+    P.push({x:x,y:y,vx:Math.cos(a)*v,vy:Math.sin(a)*v-3,l:1,s:2+Math.random()*3,c:['#f1d38a','#d6ab55','#fff3d1'][i%3]})}
+  if(!burst.on){burst.on=true;requestAnimationFrame(loop)}
+}
+function loop(){
+  cx.clearRect(0,0,cv.width,cv.height);
+  P=P.filter(function(p){return p.l>0});
+  P.forEach(function(p){p.x+=p.vx;p.y+=p.vy;p.vy+=.18;p.vx*=.99;p.l-=.012;cx.globalAlpha=Math.max(p.l,0);cx.fillStyle=p.c;cx.fillRect(p.x,p.y,p.s,p.s)});
+  if(P.length)requestAnimationFrame(loop);else{burst.on=false;cx.clearRect(0,0,cv.width,cv.height)}
+}
+</script>
+</body>
+</html>
