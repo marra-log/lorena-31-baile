@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Baile de Máscaras · Lorena</title>
-<meta name="description" content="Você é meu convidado especial. 13 de novembro, 22h. Dress code: all black esporte fino.">
+<meta name="description" content="Você é meu convidado especial. 13 de novembro de 2026, 22h. All black esporte fino. Máscara obrigatória.">
 <meta property="og:title" content="Baile de Máscaras · Lorena 🎭">
 <meta property="og:description" content="Uma noite de mistério, elegância e celebração. Abra o convite.">
 <meta property="og:type" content="website">
@@ -66,14 +66,24 @@ button{font:inherit;color:inherit;cursor:pointer}
 /* ---------- ABERTURA ---------- */
 #stage{position:relative;height:100svh;min-height:560px;background:#000;display:flex;justify-content:center;overflow:hidden}
 #stage .frame{position:relative;height:100%;aspect-ratio:9/16;max-width:100%}
-#stage video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#000}
-#tap{position:absolute;inset:0;background:transparent;border:0;z-index:3;width:100%}
-#tap .pulse{position:absolute;left:50%;bottom:12%;transform:translateX(-50%);width:72%;height:70px;border-radius:40px;border:1px solid rgba(214,171,85,.0);animation:pulse 2.2s infinite}
+#stage video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#000;transition:opacity 1.35s cubic-bezier(.22,.61,.36,1),transform 1.8s cubic-bezier(.22,.61,.36,1),filter 1.35s ease;will-change:opacity,transform}
+#stage.opened video{opacity:0;transform:scale(1.045);filter:blur(2px)}
+#stage::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;opacity:0;background:radial-gradient(ellipse at center,rgba(214,171,85,.12),rgba(0,0,0,.78) 78%);transition:opacity 1.15s ease}
+#stage.opened::after{opacity:1}
+#tap{position:absolute;inset:0;background:transparent;border:0;z-index:3;width:100%;touch-action:manipulation;transition:opacity .45s ease}
+#tap:focus-visible{outline:2px solid var(--gold2);outline-offset:-8px}
+#stage.opened #tap{opacity:0;pointer-events:none}
+#tap .pulse{position:absolute;left:50%;bottom:11%;transform:translateX(-50%);width:76%;height:76px;border-radius:40px;border:1px solid rgba(214,171,85,.0);animation:pulse 2.2s infinite}
+#tap .taplabel{position:absolute;left:50%;bottom:calc(12% + 13px);transform:translateX(-50%);white-space:nowrap;max-width:90%;color:var(--gold2);font:600 clamp(10px,2.8vw,11px) var(--serif);letter-spacing:.18em;text-align:center;text-shadow:0 2px 14px #000,0 0 22px #000;opacity:.96}
 @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(214,171,85,.45)}70%{box-shadow:0 0 0 26px rgba(214,171,85,0)}100%{box-shadow:0 0 0 0 rgba(214,171,85,0)}}
-#skip{position:absolute;top:calc(14px + env(safe-area-inset-top,0px));right:14px;z-index:4;background:rgba(0,0,0,.45);border:1px solid rgba(214,171,85,.5);color:var(--gold2);font:600 12px var(--serif);letter-spacing:.15em;padding:8px 14px;border-radius:30px;display:none}
-#scrollhint{position:absolute;left:0;right:0;bottom:calc(22px + env(safe-area-inset-bottom,0px));z-index:4;text-align:center;font:600 12px var(--serif);letter-spacing:.3em;color:var(--gold2);opacity:0;pointer-events:none;transition:opacity .8s}
-#scrollhint.on{opacity:1;pointer-events:auto;cursor:pointer}
-#scrollhint i{display:block;font-style:normal;font-size:22px;animation:bob 1.6s infinite}
+#skip{display:none!important}
+#scrollhint{display:none!important}
+#letterveil{position:absolute;inset:0;z-index:2;pointer-events:none;background:radial-gradient(circle at 50% 50%,transparent 15%,rgba(0,0,0,.34) 100%);opacity:.65;transition:opacity 1.2s}
+#stage.opened #letterveil{opacity:0}
+@media (prefers-reduced-motion:reduce){
+  #stage video,#stage::after,#tap,#letterveil{transition-duration:.01ms!important}
+  .gold,.hero img.kb,.mask,.btn.solid::before{animation:none!important}
+}
 @keyframes bob{50%{transform:translateY(6px)}}
 
 /* ---------- CONTEÚDO ---------- */
@@ -186,6 +196,13 @@ footer .script{font-size:40px}
 #toast.on{opacity:1;transform:translate(-50%,0)}
 canvas#fx{position:fixed;inset:0;pointer-events:none;z-index:50}
 @media (prefers-reduced-motion:reduce){.rv,.rvh{transition:none;opacity:1;transform:none;filter:none}.pulse,.disc,#scrollhint i,.gold,.kb,.mask,.card .ic,.btn::before{animation:none!important}}
+
+.dress-static{border:1px solid rgba(214,171,85,.55);border-radius:20px;padding:28px 22px;text-align:center;background:radial-gradient(circle at 50% 0,#241b10,#0e0b07);box-shadow:0 18px 50px rgba(0,0,0,.28)}
+.dress-static .mask{margin:0 0 4px}
+.dress-main{font:600 30px var(--serif);letter-spacing:.16em}
+.dress-sub{font:600 14px var(--serif);letter-spacing:.32em;margin-top:8px;color:var(--gold2)}
+.dress-static p{margin:18px auto 0;max-width:330px;font-size:20px;color:var(--txt)}
+.dress-static b{color:var(--gold2)}
 </style>
 </head>
 <body>
@@ -194,11 +211,12 @@ canvas#fx{position:fixed;inset:0;pointer-events:none;z-index:50}
 <canvas id="amb"></canvas><div id="prog"></div>
 <div id="stage">
   <div class="frame">
-    <video id="vid" src="asset0s.mp4" poster="asset1s.jpg" playsinline webkit-playsinline preload="auto" muted></video>
-    <button id="tap" aria-label="Clique para abrir o convite"><span class="pulse"></span></button>
+    <video id="vid" autoplay muted playsinline preload="auto" src="asset0.mp4" poster="asset1.jpg" playsinline webkit-playsinline preload="auto" muted></video>
+    <div id="letterveil"></div>
+    <button id="tap" aria-label="Abrir a carta"><span class="pulse"></span><span class="taplabel">TOQUE PARA ABRIR A CARTA</span></button>
     <button id="skip" type="button">PULAR</button>
     <div class="stagebar"></div>
-    <div id="scrollhint" role="button" tabindex="0">ROLE PARA CONTINUAR<i>⌄</i></div>
+    
   </div>
 </div>
 
@@ -214,7 +232,7 @@ canvas#fx{position:fixed;inset:0;pointer-events:none;z-index:50}
       <div class="orn rv"><b>✦</b></div>
       <div class="date3 rv"><span>13 NOV</span><i></i><span>22H</span></div>
       <p class="lead rv" style="margin:22px 0 28px">Uma noite especial está chegando…</p>
-      <div class="hero rv"><div class="pl"><img class="kb" src="asset2s.jpg" alt="Save the date: Baile de Máscaras, 13 de novembro, 22 horas"></div></div>
+      <div class="hero rv"><div class="pl"><img class="kb" src="asset2.jpg" alt="Save the date: Baile de Máscaras, 13 de novembro, 22 horas"></div></div>
       <p class="lead rv">Uma noite de mistério, elegância e celebração.</p>
       <div class="orn rv"><b>✦</b></div>
       <p class="eyebrow rv">Faltam</p>
@@ -235,12 +253,13 @@ canvas#fx{position:fixed;inset:0;pointer-events:none;z-index:50}
       <h2 class="gold rvh">Anote na agenda</h2>
       <div class="orn rv"><b>✦</b></div>
       <div class="cards">
-        <div class="card rv"><div class="ic">📅</div><div><small>Data</small><p>13 de novembro</p></div></div>
+        <div class="card rv"><div class="ic">📅</div><div><small>Data</small><p>13 de novembro de 2026</p></div></div>
         <div class="card rv"><div class="ic">🕙</div><div><small>Horário</small><p>22:00</p></div></div>
         <div class="card rv"><div class="ic">📍</div><div><small>Local</small><p>Espaço Patricio's<br>Rua Bom Repouso, 220 · Cardoso</p></div></div>
+        <div class="card rv"><div class="ic">🎭</div><div><small>Dress code · obrigatório</small><p>All black · esporte fino<br>Preto + máscara</p></div></div>
       </div>
       <div class="btns rv">
-        <a class="btn solid" id="mapa" href="https://maps.app.goo.gl/EezxqXeQnrpfvbJYA?g_st=iw" target="_blank" rel="noopener">📍 Ver no mapa</a>
+        <a class="btn solid" id="mapa" href="https://www.google.com/maps/search/?api=1&query=Espa%C3%A7o%20Patricio%27s%2C%20Rua%20Bom%20Repouso%2C%20220%2C%20Cardoso" target="_blank" rel="noopener">📍 Ver no mapa</a>
         <a class="btn" id="agenda" href="#" target="_blank" rel="noopener">🗓 Salvar na agenda</a>
       </div>
     </div>
@@ -249,14 +268,14 @@ canvas#fx{position:fixed;inset:0;pointer-events:none;z-index:50}
   <!-- DRESS CODE -->
   <section id="dress">
     <div class="wrap">
-      <p class="eyebrow rv">Dress code</p>
-      <h2 class="gold rvh">Toque para revelar</h2>
+      <p class="eyebrow rv">Dress code · obrigatório</p>
+      <h2 class="gold rvh">All black</h2>
       <div class="orn rv"><b>✦</b></div>
-      <div class="flip rv" id="flip" role="button" tabindex="0" aria-label="Revelar dress code">
-        <div class="in2">
-          <div class="face"><div class="mask">🎭</div><div class="big gold">DRESS CODE</div><div class="tip">TOQUE PARA VIRAR</div></div>
-          <div class="face back"><div class="big gold">ALL BLACK</div><div style="font:400 15px var(--serif);letter-spacing:.3em;margin:8px 0 14px">ESPORTE FINO</div><div style="font-size:20px;max-width:300px">Indispensável o uso de <b style="color:var(--gold2)">preto</b> e de <b style="color:var(--gold2)">máscara</b>.</div></div>
-        </div>
+      <div class="dress-static rv">
+        <div class="mask">🎭</div>
+        <div class="dress-main gold">ALL BLACK</div>
+        <div class="dress-sub">ESPORTE FINO</div>
+        <p>O uso de <b>preto</b> e de <b>máscara</b> é indispensável.</p>
       </div>
     </div>
   </section>
@@ -329,7 +348,7 @@ canvas#fx{position:fixed;inset:0;pointer-events:none;z-index:50}
         <div class="tick">✓</div>
         <h2 class="gold" id="okt">Presença confirmada!</h2>
         <p id="okp" style="color:var(--mut)"></p>
-        <div class="btns"><a class="btn solid" id="wa" href="#" target="_blank" rel="noopener">💬 Avisar a Lorena no WhatsApp</a></div>
+        <div class="btns"><a class="btn solid" id="wa" href="#" target="_blank" rel="noopener">💬 Enviar confirmação para Lorena</a></div>
         <p style="margin-top:18px"><button class="btn" id="redo" type="button" style="flex:none">Editar resposta</button></p>
       </div>
     </div>
@@ -354,7 +373,7 @@ canvas#fx{position:fixed;inset:0;pointer-events:none;z-index:50}
 /* ================== CONFIGURAÇÃO (edite aqui) ================== */
 var CONFIG = {
   // WhatsApp que recebe a confirmação (DDI+DDD+número, só dígitos). Vazio = o convidado escolhe o contato.
-  WHATSAPP_ANFITRIA: "",
+  WHATSAPP_ANFITRIA: "COLOQUE_AQUI_O_NUMERO_DA_LORENA",
   // Chave Pix (copiada pelo botão)
   PIX: "31999218838",
   // MELHOR OPÇÃO: coloque na mesma pasta do index.html um arquivo "musica.mp3" já cortado
@@ -391,23 +410,32 @@ function toast(t){var el=$('#toast');el.textContent=t;el.classList.add('on');cle
 var vid=$('#vid'),opened=false,audio=null,muted=false;
 function reveal(){
   $('#content').classList.add('show');$('#dock').classList.add('show');
-  $('#skip').style.display='none';$('#scrollhint').classList.add('on');
+  $('#stage').classList.add('opened');
   observe();
 }
 function openInvite(){
   if(opened)return;opened=true;
-  $('#tap').style.display='none';$('#skip').style.display='block';
-  vid.muted=true;var p=vid.play();if(p&&p.catch)p.catch(function(){vid.currentTime=vid.duration||4.7;reveal()});
+  $('#stage').classList.add('opened');
+  // Não interrompe o vídeo no meio: deixa a cena terminar visualmente sob um fade cinematográfico.
+  $('#tap').setAttribute('aria-label','Convite aberto');
   startAudio();
-  setTimeout(reveal,1500); /* conteúdo já é montado enquanto o vídeo termina */
+  reveal();
+  setTimeout(function(){
+    if($('#topo'))$('#topo').scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});
+  },760);
 }
-vid.addEventListener('ended',function(){vid.pause();reveal();$('#stage').classList.add('done');setTimeout(function(){$('#scrollhint').classList.add('on')},300);
-  setTimeout(function(){if(scrollY<innerHeight*.3&&!userScrolled)$('#topo').scrollIntoView({behavior:'smooth'})},2600)});
-var userScrolled=false;addEventListener('wheel',function(){userScrolled=true},{passive:true});addEventListener('touchmove',function(){userScrolled=true},{passive:true});
+function startEnvelope(){
+  vid.muted=true;
+  var p=vid.play();
+  if(p&&p.catch)p.catch(function(){});
+}
+vid.addEventListener('ended',function(){
+  if(!opened){
+    $('#tap').querySelector('.taplabel').textContent='TOQUE PARA ABRIR A CARTA';
+  }
+});
 $('#tap').addEventListener('click',openInvite);
-$('#skip').addEventListener('click',function(){try{vid.currentTime=Math.max(0,(vid.duration||4.8)-.05)}catch(e){}vid.pause();reveal();$('#topo').scrollIntoView({behavior:'smooth'})});
-$('#scrollhint').addEventListener('click',function(){$('#topo').scrollIntoView({behavior:'smooth'})});
-$('#scrollhint').addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' ')$('#topo').scrollIntoView({behavior:'smooth'})});
+startEnvelope();
 
 /* ---------- música ---------- */
 var mode='none',sp=null,spReady=false,spFirst=true,playing=false;
@@ -492,8 +520,11 @@ $('#agenda').href='https://calendar.google.com/calendar/render?action=TEMPLATE'
 
 /* ---------- dress code ---------- */
 var flip=$('#flip');
-function tg(){flip.classList.toggle('on')}
-flip.addEventListener('click',tg);flip.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();tg()}});
+if(flip){
+  function tg(){flip.classList.toggle('on')}
+  flip.addEventListener('click',tg);
+  flip.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();tg()}});
+}
 
 /* ---------- presentes ---------- */
 var chosen=[];try{chosen=JSON.parse(store.get('gifts')||'[]')}catch(e){}
@@ -534,10 +565,13 @@ function showOk(d){
   var sim=d.rs==='sim';
   $('#okt').textContent=sim?'Presença confirmada!':'Sentiremos sua falta';
   $('#okp').textContent=sim?(d.nome.split(' ')[0]+', te esperamos dia 13/11, às 22h, de preto e de máscara. 🖤'):(d.nome.split(' ')[0]+', obrigada por avisar! 🖤');
-  var msg='Olá, Lorena! Aqui é '+d.nome+' ('+d.tel+'). '+(sim?'Confirmo minha presença no Baile de Máscaras dia 13/11 às 22h 🎭🖤':'Infelizmente não poderei ir ao Baile de Máscaras, mas desejo uma noite incrível! 🖤');
-  var g=giftTxt();if(sim&&g)msg+=' Pretendo te presentear com: '+g+'.';
-  $('#wa').href='https://wa.me/'+(CONFIG.WHATSAPP_ANFITRIA||'')+'?text='+encodeURIComponent(msg);
+  var g=giftTxt()||'Nenhum presente selecionado';
+  var msg='Olá, Lorena! 🎭\n\nConfirmação do convite — Baile de Máscaras\n\nNome: '+d.nome+'\nTelefone: '+d.tel+'\nPresença: '+(sim?'VOU':'NÃO VOU')+'\nPresentes marcados: '+g+'\n\nData: 13 de novembro de 2026\nHorário: 22h\nLocal: Espaço Patricio\'s — Rua Bom Repouso, 220, Cardoso\nDress code: ALL BLACK / esporte fino / máscara obrigatória.';
+  var waNumber=(CONFIG.WHATSAPP_ANFITRIA||'').replace(/\D/g,'');
+  var waBase=waNumber?'https://wa.me/'+waNumber:'https://wa.me/';
+  $('#wa').href=waBase+'?text='+encodeURIComponent(msg);
   $('#wa').style.display='';
+  if(!waNumber){$('#wa').textContent='💬 Abrir WhatsApp com a confirmação';}
 }
 $('#form').addEventListener('submit',function(e){
   e.preventDefault();
