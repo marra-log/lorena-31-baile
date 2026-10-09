@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="color-scheme" content="dark">
+<meta name="darkreader-lock">
+<title>Lista de confirmações · Baile de Máscaras · Lorena</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="stylesheet" href="assets/fonts.css">
+<style>
+:root{color-scheme:dark;--gold:#d6ab55;--goldl:#f1d38a;--ink:#f3ead6;--mut:#b3a587;--serif:'Cinzel',Georgia,serif;--body:'Cormorant Garamond',Georgia,serif}
+@media (prefers-color-scheme:dark){html,body{background:#050403;color:#f3ead6}}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(ellipse at 50% 0,#17120b,#050403 60%);min-height:100vh;color:var(--ink);font-family:var(--body);font-size:18px}
+.wrap{max-width:1100px;margin:0 auto;padding:28px 16px 60px}
+h1{font:400 26px var(--serif);letter-spacing:.12em;color:var(--goldl);text-align:center;margin:6px 0 2px}
+.sub{text-align:center;color:var(--mut);margin:0 0 22px}
+.card{border:1px solid rgba(214,171,85,.45);border-radius:16px;background:rgba(20,16,11,.85);padding:18px}
+#login{max-width:380px;margin:40px auto;text-align:center}
+input{width:100%;background:transparent;border:0;border-bottom:1.5px solid var(--gold);color:var(--ink);font:400 20px var(--body);padding:8px 2px;outline:0;margin:10px 0 16px}
+button,.btn{font:600 12px var(--serif);letter-spacing:.14em;text-transform:uppercase;padding:12px 18px;border-radius:30px;border:1.5px solid var(--gold);background:transparent;color:var(--goldl);cursor:pointer}
+button.solid{background:linear-gradient(180deg,#f1d38a,#d6ab55);color:#1a1208;border-color:transparent}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:16px}
+.stats div{border:1px solid rgba(214,171,85,.4);border-radius:14px;padding:12px;text-align:center;background:rgba(20,16,11,.85)}
+.stats b{display:block;font:600 30px var(--serif);color:var(--goldl)}
+.stats span{font:600 10px var(--serif);letter-spacing:.2em;color:var(--mut);text-transform:uppercase}
+.bar{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;margin-bottom:12px}
+.tw{overflow-x:auto;border:1px solid rgba(214,171,85,.35);border-radius:14px}
+table{width:100%;border-collapse:collapse;font-size:16px}
+th{font:600 10px var(--serif);letter-spacing:.16em;text-transform:uppercase;color:var(--gold);text-align:left;padding:10px;border-bottom:1px solid rgba(214,171,85,.4);white-space:nowrap;background:rgba(214,171,85,.06)}
+td{padding:9px 10px;border-bottom:1px solid rgba(214,171,85,.15);vertical-align:top}
+tr.nao td{color:var(--mut)}
+.pill{display:inline-block;padding:2px 10px;border-radius:20px;font:600 10px var(--serif);letter-spacing:.1em}
+.pill.sim{background:#d6ab55;color:#1a1208}.pill.nao{border:1px solid #8a7a5c;color:#b3a587}
+.del{padding:6px 10px;font-size:10px;border-color:#8a5a4a;color:#e59b8b}
+.err{color:#e59b8b;min-height:1.2em}
+.empty{text-align:center;color:var(--mut);padding:30px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>LISTA DE CONFIRMAÇÕES</h1>
+  <p class="sub">Baile de Máscaras · Lorena Cunha 31 anos · 13/11 às 22h</p>
+  <form id="login" class="card">
+    <p style="margin:0;color:var(--mut)">Área restrita. Digite a senha.</p>
+    <input id="pw" type="password" autocomplete="current-password" placeholder="Senha" required>
+    <div class="err" id="lerr"></div>
+    <button class="solid" type="submit">Entrar</button>
+  </form>
+  <div id="app" hidden>
+    <div class="stats">
+      <div><b id="s-pessoas">0</b><span>Pessoas confirmadas</span></div>
+      <div><b id="s-sim">0</b><span>Respostas “sim”</span></div>
+      <div><b id="s-nao">0</b><span>Não vão</span></div>
+      <div><b id="s-total">0</b><span>Total de respostas</span></div>
+    </div>
+    <div class="bar"><button id="reload">Atualizar</button><button id="csv" class="solid">Baixar CSV</button><button id="sair">Sair</button></div>
+    <div class="tw"><table><thead><tr><th>Data/hora (Brasília)</th><th>Nome</th><th>Telefone</th><th>Vai?</th><th>Pessoas</th><th>Acompanhantes</th><th>Mensagem</th><th></th></tr></thead><tbody id="tb"></tbody></table></div>
+    <div class="err" id="aerr"></div>
+  </div>
+</div>
+<script>
+var $=function(s){return document.querySelector(s)},PW='',ITEMS=[];
+try{PW=sessionStorage.getItem('rsvp_pw')||''}catch(e){}
+function esc(t){return String(t==null?'':t).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function load(){
+  $('#aerr').textContent='';
+  return fetch('/api/rsvp',{headers:{'x-admin-password':PW},cache:'no-store'}).then(function(r){return r.json().then(function(j){return{st:r.status,j:j}})}).then(function(x){
+    if(x.st===401){PW='';try{sessionStorage.removeItem('rsvp_pw')}catch(e){}$('#app').hidden=true;$('#login').hidden=false;$('#lerr').textContent='Senha incorreta.';return}
+    if(!x.j.ok){$('#aerr').textContent=x.j.error==='storage_not_configured'?'Armazenamento não configurado (Vercel Blob).':'Erro ao carregar.';return}
+    try{sessionStorage.setItem('rsvp_pw',PW)}catch(e){}
+    $('#login').hidden=true;$('#app').hidden=false;ITEMS=x.j.items||[];render();
+  }).catch(function(){$('#aerr').textContent='Erro de conexão.'});
+}
+function render(){
+  var sim=ITEMS.filter(function(i){return i.vai==='sim'}),nao=ITEMS.filter(function(i){return i.vai!=='sim'});
+  $('#s-pessoas').textContent=sim.reduce(function(a,i){return a+(+i.pessoas||1)},0);
+  $('#s-sim').textContent=sim.length;$('#s-nao').textContent=nao.length;$('#s-total').textContent=ITEMS.length;
+  $('#tb').innerHTML=ITEMS.length?ITEMS.map(function(i){return '<tr class="'+(i.vai==='sim'?'sim':'nao')+'"><td>'+esc(i.criadoEmBR)+'</td><td>'+esc(i.nome)+'</td><td><a href="https://wa.me/55'+esc(String(i.telefone).replace(/\D/g,''))+'" target="_blank" rel="noopener" style="color:inherit">'+esc(i.telefone)+'</a></td><td><span class="pill '+(i.vai==='sim'?'sim':'nao')+'">'+(i.vai==='sim'?'SIM':'NÃO')+'</span></td><td>'+esc(i.pessoas)+'</td><td>'+esc(i.acompanhantes)+'</td><td>'+esc(i.mensagem)+'</td><td><button class="del" data-id="'+esc(i.id)+'">Excluir</button></td></tr>'}).join(''):'<tr><td colspan="8" class="empty">Nenhuma confirmação ainda.</td></tr>';
+}
+$('#tb').addEventListener('click',function(e){
+  var b=e.target.closest('.del');if(!b)return;
+  if(!confirm('Excluir esta confirmação? Esta ação não pode ser desfeita.'))return;
+  fetch('/api/rsvp?id='+encodeURIComponent(b.getAttribute('data-id')),{method:'DELETE',headers:{'x-admin-password':PW}}).then(load);
+});
+$('#login').addEventListener('submit',function(e){e.preventDefault();PW=$('#pw').value;$('#lerr').textContent='';load()});
+$('#reload').addEventListener('click',load);
+$('#sair').addEventListener('click',function(){PW='';try{sessionStorage.removeItem('rsvp_pw')}catch(e){}location.reload()});
+$('#csv').addEventListener('click',function(){
+  var q=function(v){v=String(v==null?'':v);return '"'+v.replace(/"/g,'""')+'"'};
+  var rows=[['Data/hora (Brasília)','Nome','Telefone','Vai comparecer','Pessoas','Acompanhantes','Mensagem','ISO']].concat(ITEMS.map(function(i){return[i.criadoEmBR,i.nome,i.telefone,i.vai==='sim'?'Sim':'Não',i.pessoas,i.acompanhantes,i.mensagem,i.criadoEm]}));
+  var csv='\ufeff'+rows.map(function(r){return r.map(q).join(';')}).join('\r\n');
+  var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));a.download='confirmacoes-baile-lorena.csv';document.body.appendChild(a);a.click();a.remove();
+});
+if(PW)load();
+</script>
+</body>
+</html>

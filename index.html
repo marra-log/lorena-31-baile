@@ -149,6 +149,19 @@ input::placeholder{color:#7d725f}
 .seg input{position:absolute;opacity:0;pointer-events:none}
 .seg label{text-align:center;padding:13px 6px;border:1.5px solid var(--line);border-radius:40px;font:600 11px var(--serif);letter-spacing:.1em;color:var(--mut);cursor:pointer;transition:.25s;background:transparent}
 .seg input:checked+label{background:linear-gradient(180deg,#f1d38a,#d6ab55);color:#1a1208;border-color:transparent}
+textarea{width:100%;background:rgba(214,171,85,.04);border:1px solid rgba(214,171,85,.45);border-radius:12px;color:var(--ink);font:400 19px/1.35 var(--body);padding:10px 12px;outline:0;resize:vertical}
+textarea:focus,input:focus{border-color:var(--goldl)}
+input[type=tel],input[type=number]{width:100%;background:transparent;border:0;border-bottom:1.5px solid var(--gold);color:var(--ink);font:400 22px var(--body);padding:8px 2px;outline:0;border-radius:0}
+span.l{display:block;font:600 11px var(--serif);letter-spacing:.3em;text-transform:uppercase;color:var(--goldd);margin-bottom:8px}
+.qty{display:flex;align-items:center;gap:10px}.qty input{text-align:center;max-width:90px;-moz-appearance:textfield}
+.qty input::-webkit-outer-spin-button,.qty input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.qb{width:44px;height:44px;border-radius:50%;border:1.5px solid var(--gold);color:var(--goldl);font-size:22px;line-height:1}
+.hp{position:absolute!important;left:-9999px;width:1px;height:1px;overflow:hidden}
+#enviar .spin{display:none;width:16px;height:16px;border:2px solid rgba(26,18,8,.35);border-top-color:#1a1208;border-radius:50%;animation:rot .8s linear infinite}
+#enviar.loading .spin{display:inline-block}#enviar.loading{pointer-events:none;opacity:.85}
+@keyframes rot{to{transform:rotate(360deg)}}
+.tick{width:78px;height:78px;margin:6px auto 14px;border-radius:50%;border:1.5px solid var(--gold);display:grid;place-items:center;font-size:36px;color:var(--goldl);animation:pop .6s}
+@keyframes pop{0%{transform:scale(.3);opacity:0}70%{transform:scale(1.1)}100%{transform:scale(1);opacity:1}}
 .err{color:#e59b8b;font-size:15px;min-height:1em}
 #toast{position:fixed;left:50%;bottom:calc(40px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);background:var(--gold);color:#1a1208;font:600 12px var(--serif);letter-spacing:.12em;padding:12px 20px;border-radius:30px;opacity:0;pointer-events:none;transition:.35s;z-index:60;max-width:90%;text-align:center;border:1px solid var(--gold)}
 #toast.on{opacity:1;transform:translate(-50%,0)}
@@ -298,18 +311,38 @@ input::placeholder{color:#7d725f}
 <div class="ov" id="ov-rsvp" role="dialog" aria-modal="true" aria-label="Confirmar presença">
   <button class="x" data-close aria-label="Voltar ao convite">×</button>
   <div class="box">
-    <p class="eyebrow">RSVP</p>
-    <h2 class="gold" style="margin-top:10px">Confirme sua presença</h2>
-    <div class="orn">✦</div>
-    <p class="mut" style="font-size:17px">Baile de Máscaras · 13/11 às 22:00</p>
-    <form id="form" novalidate>
-      <div><label class="l" for="nome">Seu nome</label><input id="nome" type="text" autocomplete="name" placeholder="Nome e sobrenome"><div class="err" id="enome"></div></div>
-      <div class="seg">
-        <input type="radio" name="rs" id="rs1" value="sim" checked><label for="rs1">Vou com certeza</label>
-        <input type="radio" name="rs" id="rs2" value="nao"><label for="rs2">Não poderei ir</label>
-      </div>
-      <button class="btn solid" type="submit">💬 Confirmar pelo WhatsApp</button>
-    </form>
+    <div id="rsvp-form-wrap">
+      <p class="eyebrow">RSVP</p>
+      <h2 class="gold" style="margin-top:10px">Confirme sua presença</h2>
+      <div class="orn">✦</div>
+      <p class="mut" style="font-size:17px">Baile de Máscaras · 13/11 às 22:00</p>
+      <form id="form" novalidate autocomplete="on">
+        <div><label class="l" for="nome">Nome completo *</label><input id="nome" name="nome" type="text" autocomplete="name" maxlength="120" placeholder="Nome e sobrenome" required><div class="err" id="e-nome"></div></div>
+        <div><label class="l" for="tel">Telefone / WhatsApp *</label><input id="tel" name="telefone" type="tel" inputmode="tel" autocomplete="tel" maxlength="16" placeholder="(31) 99999-9999" required><div class="err" id="e-telefone"></div></div>
+        <div><span class="l">Vai comparecer? *</span>
+          <div class="seg">
+            <input type="radio" name="vai" id="vai1" value="sim" checked><label for="vai1">Sim, vou! 🖤</label>
+            <input type="radio" name="vai" id="vai2" value="nao"><label for="vai2">Não poderei ir</label>
+          </div>
+        </div>
+        <div id="grp-pessoas">
+          <label class="l" for="pessoas">Quantidade de pessoas (incluindo você)</label>
+          <div class="qty"><button type="button" class="qb" data-q="-1" aria-label="Diminuir">−</button><input id="pessoas" name="pessoas" type="number" inputmode="numeric" min="1" max="20" value="1"><button type="button" class="qb" data-q="1" aria-label="Aumentar">+</button></div>
+        </div>
+        <div id="grp-acomp" hidden><label class="l" for="acomp">Nome dos acompanhantes</label><textarea id="acomp" name="acompanhantes" rows="2" maxlength="600" placeholder="Opcional"></textarea></div>
+        <div><label class="l" for="msg">Mensagem para a Lorena</label><textarea id="msg" name="mensagem" rows="3" maxlength="1000" placeholder="Opcional"></textarea></div>
+        <div class="hp" aria-hidden="true"><label for="empresa">Empresa</label><input id="empresa" name="empresa" type="text" tabindex="-1" autocomplete="off"></div>
+        <div class="err" id="e-geral" role="alert"></div>
+        <button class="btn solid" id="enviar" type="submit"><span class="lbl">Confirmar presença</span><span class="spin" aria-hidden="true"></span></button>
+      </form>
+    </div>
+    <div id="rsvp-ok" hidden>
+      <div class="tick">✓</div>
+      <h2 class="gold" id="ok-t">Presença confirmada! 🖤✨</h2>
+      <div class="orn">✦</div>
+      <p id="ok-p"></p>
+      <button class="btn" type="button" data-close>Voltar ao convite</button>
+    </div>
   </div>
 </div>
 
@@ -318,7 +351,6 @@ input::placeholder{color:#7d725f}
 <script>
 /* ================== CONFIGURAÇÃO ================== */
 var CONFIG = {
-  WHATSAPP: "",                 // DDI+DDD+número (só dígitos) de quem recebe as confirmações. Vazio = convidado escolhe o contato.
   PIX: "31999218838",
   MUSICA: "assets/musica.mp3",  // Dancin' Days (As Frenéticas) — trecho "caia na gandaia, entre nessa festa…"
   VOLUME: 0.85,
@@ -411,15 +443,56 @@ function copiar(t){
 $('#pixbtn').addEventListener('click',function(){copiar(CONFIG.PIX)});
 $('#pixkey').addEventListener('click',function(){copiar(CONFIG.PIX)});
 
-/* ---------- RSVP via WhatsApp ---------- */
-$('#form').addEventListener('submit',function(e){
-  e.preventDefault();
-  var nome=$('#nome').value.trim();$('#enome').textContent='';
-  if(nome.length<2){$('#enome').textContent='Digite seu nome.';return}
-  var sim=document.querySelector('input[name=rs]:checked').value==='sim';
-  var msg='Olá, Lorena! Aqui é '+nome+'. '+(sim?'Confirmo minha presença no Baile de Máscaras dia 13/11 às 22h 🎭🖤':'Infelizmente não poderei ir ao Baile de Máscaras, mas desejo uma noite incrível! 🖤');
-  window.open('https://wa.me/'+CONFIG.WHATSAPP+'?text='+encodeURIComponent(msg),'_blank','noopener');
+/* ---------- RSVP: formulário -> /api/rsvp ---------- */
+var form=$('#form'),tel=$('#tel'),pes=$('#pessoas'),sending=false,formOpenedAt=Date.now();
+tel.addEventListener('input',function(){
+  var v=tel.value.replace(/\D/g,'').slice(0,11),o=v;
+  if(v.length>2)o='('+v.slice(0,2)+') '+v.slice(2);
+  if(v.length>6)o='('+v.slice(0,2)+') '+v.slice(2,v.length===11?7:6)+'-'+v.slice(v.length===11?7:6);
+  tel.value=o;
 });
+function syncVai(){
+  var sim=document.querySelector('input[name=vai]:checked').value==='sim';
+  $('#grp-pessoas').hidden=!sim;$('#grp-acomp').hidden=!sim||(+pes.value||1)<2;
+}
+function clampP(){var n=parseInt(pes.value,10);if(!(n>=1))n=1;if(n>20)n=20;pes.value=n;syncVai()}
+document.querySelectorAll('input[name=vai]').forEach(function(r){r.addEventListener('change',syncVai)});
+document.querySelectorAll('.qb').forEach(function(b){b.addEventListener('click',function(){pes.value=(parseInt(pes.value,10)||1)+(+b.getAttribute('data-q'));clampP()})});
+pes.addEventListener('change',clampP);pes.addEventListener('input',syncVai);
+document.querySelector('[data-open="#ov-rsvp"]').addEventListener('click',function(){formOpenedAt=Date.now();$('#rsvp-form-wrap').hidden=false;$('#rsvp-ok').hidden=true});
+function setErr(k,t){var e=$('#e-'+k);if(e)e.textContent=t||''}
+form.addEventListener('submit',function(e){
+  e.preventDefault();if(sending)return;
+  ['nome','telefone','geral'].forEach(function(k){setErr(k,'')});
+  var d={nome:$('#nome').value.trim(),telefone:tel.value.trim(),vai:document.querySelector('input[name=vai]:checked').value,
+    pessoas:parseInt(pes.value,10)||1,acompanhantes:$('#acomp').value.trim(),mensagem:$('#msg').value.trim(),empresa:$('#empresa').value};
+  var ok=true;
+  if(d.nome.length<3||!/\s/.test(d.nome)){setErr('nome','Informe seu nome completo.');ok=false}
+  var dg=d.telefone.replace(/\D/g,'');if(dg.length<10||dg.length>11){setErr('telefone','Informe um telefone/WhatsApp válido com DDD.');ok=false}
+  if(!ok)return;
+  if(d.empresa)return; /* honeypot */
+  sending=true;var bt=$('#enviar');bt.classList.add('loading');bt.querySelector('.lbl').textContent='Enviando…';
+  var done=function(){sending=false;bt.classList.remove('loading');bt.querySelector('.lbl').textContent='Confirmar presença'};
+  var ctrl=window.AbortController?new AbortController():null;var to=setTimeout(function(){ctrl&&ctrl.abort()},15000);
+  fetch('/api/rsvp',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d),signal:ctrl?ctrl.signal:undefined})
+  .then(function(r){return r.json().catch(function(){return{ok:false}}).then(function(j){return{st:r.status,j:j}})})
+  .then(function(x){
+    clearTimeout(to);
+    if(x.j&&x.j.ok){
+      var first=d.nome.split(' ')[0];
+      $('#ok-t').textContent=d.vai==='sim'?'Presença confirmada! 🖤✨':'Resposta registrada 🖤';
+      $('#ok-p').textContent=d.vai==='sim'?(first+', te esperamos dia 13/11, às 22h, de preto e de máscara! '+(d.pessoas>1?'('+d.pessoas+' pessoas)':'')):(first+', obrigada por avisar! Sentiremos sua falta.');
+      $('#rsvp-form-wrap').hidden=true;$('#rsvp-ok').hidden=false;form.reset();syncVai();done();
+      try{localStorage.setItem('rsvp_enviado','1')}catch(e){}
+      return;
+    }
+    done();
+    if(x.j&&x.j.errors){Object.keys(x.j.errors).forEach(function(k){setErr(k,x.j.errors[k])});return}
+    setErr('geral','Não foi possível enviar agora. Tente novamente em instantes.');
+  }).catch(function(){clearTimeout(to);done();setErr('geral','Sem conexão. Verifique sua internet e tente novamente.')});
+});
+syncVai();
+$('#nome').addEventListener('input',function(){setErr('nome','')});tel.addEventListener('input',function(){setErr('telefone','')});
 
 /* ---------- partículas douradas ---------- */
 var fxOn=false;
